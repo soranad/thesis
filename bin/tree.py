@@ -115,7 +115,7 @@ def multiControllerNet():
 
 	info( "\n\n*** Start iperf client\n" )
 	for i in range(numberOfSends) :
-		randHost[i][1].cmd(cmds[i])
+		randHost[i][0].cmd(cmds[i])
 		sleep(Y[i])
 
 	# sleep(120)
