@@ -8,8 +8,8 @@ do
 		# number of switch
 		for no_switch in 50 100
 		do
-			echo "./calculateResult-2 ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/"
-			./calculateResult-2 ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/
+			echo "./calculateResult-2 ../result-17-10-03-02/tree-$no_switch-sw-$send_rate-ps-$repeat_no/"
+			./calculateResult-2 ../result-17-10-03-02/tree-$no_switch-sw-$send_rate-ps-$repeat_no/
 		done
 		echo ""
 	done

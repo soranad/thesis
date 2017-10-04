@@ -13,16 +13,16 @@ no_capture_package=-1
 
 #number of experiments repeat
 # for repeat_no in 01 02 03
-for repeat_no in 01
+for repeat_no in 01 02
 do
 
 	# send rate (flow per sec)
 	# for send_rate in 010 020 030 040 050 060 070 080 090 100
-	for send_rate in 400 300 200 100
+	for send_rate in 100 200 300 400 500 600 700 800 900 1000
 	do
 		# number of switch
 		# for no_switch in 010 020 030 040 050 060 070 080 090 100
-		for no_switch in 100
+		for no_switch in 100 200 300 400 500
 		do
 			sudo mn -c
 			sudo rm -rf ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/
@@ -39,8 +39,6 @@ do
 			echo ""
 
 			sudo sshpass -p $password ssh $username@$controller_IP 'rm cpu-mem-uses.txt' &
-			sudo sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture.sh' &
-			sudo sshpass -p $password ssh $username@$controller_IP './start-controller.sh' &
 			
 			echo "wait for start topology"
 			for delay in $(seq 1 $delay_after_start_controller)
@@ -49,6 +47,9 @@ do
 				sleep 1s
 			done
 			echo ""
+			
+			sudo sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture.sh' &
+			sudo sshpass -p $password ssh $username@$controller_IP './start-controller.sh' &
 			
 			sudo python tree.py $no_switch $no_host $interface $no_capture_package $send_rate $sent_long $controller_IP ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 			sudo sshpass -p $password scp $username@$controller_IP:cpu-mem-uses.txt ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no

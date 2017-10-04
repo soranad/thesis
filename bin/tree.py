@@ -101,6 +101,7 @@ def multiControllerNet():
 	info( "\n\n*** random cmd send package \n" )
 	print numberOfHost
 	randHost = list(itertools.combinations(hosts, 2))
+	random.shuffle(randHost)
 	print len(randHost)
 	
 	for i in range(numberOfSends) :
