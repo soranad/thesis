@@ -39,6 +39,7 @@ do
 			echo ""
 
 			sudo sshpass -p $password ssh $username@$controller_IP 'rm cpu-mem-uses.txt' &
+			sudo sshpass -p $password ssh $username@$controller_IP './start-controller.sh' &
 			
 			echo "wait for start topology"
 			for delay in $(seq 1 $delay_after_start_controller)
@@ -49,7 +50,6 @@ do
 			echo ""
 			
 			sudo sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture.sh' &
-			sudo sshpass -p $password ssh $username@$controller_IP './start-controller.sh' &
 			
 			sudo python tree.py $no_switch $no_host $interface $no_capture_package $send_rate $sent_long $controller_IP ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 			sudo sshpass -p $password scp $username@$controller_IP:cpu-mem-uses.txt ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
