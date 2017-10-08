@@ -78,8 +78,8 @@ def multiControllerNet():
 	directoryName = directoryName + "/ping"
 
 	cmd = ['./openflow-sniffex', sys.argv[3], sys.argv[4], sys.argv[len(sys.argv)-1]+"/cap.csv"]
-	process = subprocess.Popen(cmd)
-	# process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	# process = subprocess.Popen(cmd)
+	process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
 
 	# info( "\n\n*** Start iperf Server\n" )
@@ -105,7 +105,8 @@ def multiControllerNet():
 	print len(randHost)
 	
 	for i in range(numberOfSends) :
-		cmds[i] = "ping -c 1 -W 100 " + randHost[i][1].IP() + " >> "+directoryName+"/"+str(i).zfill(6)+".txt &"
+		cmds[i] = "python ping.py " + randHost[i][1].IP() + " " + randHost[i][0].IP() + " >> "+directoryName+"/"+str(i).zfill(6)+".csv &"
+		# cmds[i] = "ping -c 1 -W 100 " + randHost[i][1].IP() + " >> "+directoryName+"/"+str(i).zfill(6)+".txt &"
 		# cmds[i] = "iperf -c " + randHost[1].IP() + " -n 10000000 &"
 
 	# sleep(120)
