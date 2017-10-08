@@ -78,8 +78,8 @@ def multiControllerNet():
 	directoryName = directoryName + "/ping"
 
 	cmd = ['./openflow-sniffex', sys.argv[3], sys.argv[4], sys.argv[len(sys.argv)-1]+"/cap.csv"]
-	# process = subprocess.Popen(cmd)
-	process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	process = subprocess.Popen(cmd)
+	# process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
 
 	# info( "\n\n*** Start iperf Server\n" )
