@@ -77,14 +77,8 @@ def multiControllerNet():
 	directoryName = sys.argv[len(sys.argv)-1];
 	directoryName = directoryName + "/ping"
 
-	cmd = ['./openflow-sniffex', sys.argv[3], sys.argv[4], sys.argv[len(sys.argv)-1]+"/cap.csv"]
-	process = subprocess.Popen(cmd)
-	# process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
 
-	# info( "\n\n*** Start iperf Server\n" )
-	# for i in range(numberOfHost) :
-	# 	hosts[i].cmd("iperf -s &")
 
 	
 	info( "\n\n*** gennerate command\n" )
@@ -110,13 +104,26 @@ def multiControllerNet():
 		# cmds[i] = "iperf -c " + randHost[1].IP() + " -n 10000000 &"
 
 	# sleep(120)
-	for i in range(115) :
+	for i in range(100) :
 		sys.stdout.write("\r" + str(120-i) + " ")
+		sys.stdout.flush()
+		sleep(1)
+
+	# info( "\n\n*** Start iperf Server\n" )
+	# for i in range(numberOfHost) :
+	# 	hosts[i].cmd("iperf -s &")
+
+	for i in range(15) :
+		sys.stdout.write("\r" + str(15-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
 
 	cmd2 = ["sshpass", "-p", "password", "ssh", "nick@192.168.1.11", "'./start-cpu-mem-capture.sh' &"]
 	process2 = subprocess.Popen(cmd2)
+
+	cmd = ['./openflow-sniffex', sys.argv[3], sys.argv[4], sys.argv[len(sys.argv)-1]+"/cap.csv"]
+	process = subprocess.Popen(cmd)
+	# process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
 	for i in range(5) :
 		sys.stdout.write("\r" + str(5-i) + " ")
