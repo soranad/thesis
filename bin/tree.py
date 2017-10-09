@@ -115,7 +115,7 @@ def multiControllerNet():
 		sys.stdout.flush()
 		sleep(1)
 
-	cmd2 = ["sshpass -p password ssh nick@192.168.1.11 './start-cpu-mem-capture.sh' &'"]
+	cmd2 = ["sshpass", "-p", "password", "ssh", "nick@192.168.1.11", "'./start-cpu-mem-capture.sh' &"]
 	process2 = subprocess.Popen(cmd2)
 
 	for i in range(5) :
