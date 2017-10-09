@@ -110,8 +110,16 @@ def multiControllerNet():
 		# cmds[i] = "iperf -c " + randHost[1].IP() + " -n 10000000 &"
 
 	# sleep(120)
-	for i in range(120) :
+	for i in range(115) :
 		sys.stdout.write("\r" + str(120-i) + " ")
+		sys.stdout.flush()
+		sleep(1)
+
+	cmd2 = ["sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture.sh' &'"]
+	process2 = subprocess.Popen(cmd2)
+
+	for i in range(5) :
+		sys.stdout.write("\r" + str(5-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
 

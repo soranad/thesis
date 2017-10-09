@@ -1,0 +1,8 @@
+bin/openflow-sniffex
+bin/openflow-sniffex
+bin/calculateResult-2
+bin/cap_analysis
+pcap/sniffex
+results/*
+result-*
+*.csv

@@ -18,11 +18,11 @@ do
 
 	# send rate (flow per sec)
 	# for send_rate in 010 020 030 040 050 060 070 080 090 100
-	for send_rate in 100 200 300 400 500 600 700 800 900 1000
+	for send_rate in 100 200
 	do
 		# number of switch
 		# for no_switch in 010 020 030 040 050 060 070 080 090 100
-		for no_switch in 100 200 300 400 500
+		for no_switch in 050 100
 		do
 			sudo mn -c
 			sudo rm -rf ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/
@@ -49,7 +49,7 @@ do
 			done
 			echo ""
 			
-			sudo sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture.sh' &
+			# sudo sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture.sh' &
 			
 			sudo python tree.py $no_switch $no_host $interface $no_capture_package $send_rate $sent_long $controller_IP ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 			sudo sshpass -p $password scp $username@$controller_IP:cpu-mem-uses.txt ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
