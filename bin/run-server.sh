@@ -1,7 +1,7 @@
 controller_IP="192.168.1.11"
 username="nick"
 password="password"
-interface="ens3"
+interface="enp38s0"
 
 delay_before_start_controller=30
 delay_after_start_controller=60
