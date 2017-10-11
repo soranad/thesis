@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 			int sIP1,sIP2,sIP3,sIP4;
 			int dIP1,dIP2,dIP3,dIP4;
 			double delay;
-			int round ;
+			int round = 0;
 
 			fscanf(inF, "%d.%d.%d.%d,%d.%d.%d.%d,%lf ms, %d", &sIP1, &sIP2, &sIP3, &sIP4, &dIP1, &dIP2, &dIP3, &dIP4, &delay, &round); 
 			fclose(inF);
@@ -93,11 +93,13 @@ int main(int argc, char **argv)
 					maxDip3 = dIP3;
 					maxDip4 = dIP4;
 					maxDelay = delay;
+					printf("%s",part);
 				}
 			}
 
 			totalDelay += delay;
-			sendRound += round;
+			//printf("%lf:%d ", sendRound, round);
+			sendRound = sendRound + round;
 
 			// FILE* outF;
 			// if ( argc > 2) {
@@ -114,7 +116,9 @@ int main(int argc, char **argv)
 		closedir(d);
 	}
 
-	printf("%lf,%lf,%lf,%lf\\n",minDelay,maxDelay,totalDelay/count,sendRound/count);
+	printf("\n %lf %d \n", sendRound, count);
+
+	printf("%lf,%lf,%lf,%lf \n",minDelay,maxDelay,totalDelay/count,sendRound/count);
 
 	char str[999];
 	FILE * file;

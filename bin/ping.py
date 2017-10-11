@@ -8,17 +8,17 @@ if len(sys.argv) > 2 :
 	hostname = sys.argv[2]
 
 start = time.time()
-response = subprocess.call(["ping -c 1 -W 5", hostname], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+response = subprocess.call(["ping", "-c", "1", "-W", "5", hostname], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 end = time.time()
 count = 1
 # response, err = p.communicate()
-while response != 0 :
-	response = subprocess.call(["ping -c 1 -W 5", hostname], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+while response != 0 & count < 30:
+	response = subprocess.call(["ping", "-c", "1", "-W", "5", hostname], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	end = time.time()
 	count = count + 1
 	# response, err = p.communicate()
 
-print "%s,%s,%f ms, %d" % (sys.argv[1],sys.argv[2],(end-start)*1000) , count
+print "%s,%s,%f ms, %d" % (sys.argv[1], sys.argv[2], (end-start)*1000, count)
 
 # Y = np.random.exponential(1, 1)
 # response = subprocess.call(["iperf", "-c", hostname, "-t", str(Y[0])], stdout=subprocess.PIPE, stderr=subprocess.PIPE)

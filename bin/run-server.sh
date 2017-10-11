@@ -16,14 +16,16 @@ no_capture_package=-1
 for repeat_no in 01
 do
 
-	# send rate (flow per sec)
-	# for send_rate in 010 020 030 040 050 060 070 080 090 100
-	for send_rate in 050 100 250 200
-	do
-		# number of switch
-		# for no_switch in 010 020 030 040 050 060 070 080 090 100
-		for no_switch in 025 050 075 100
+	# number of switch
+        # for no_switch in 010 020 030 040 050 060 070 080 090 100
+        for no_switch in 100 200 300 400 500
+        do
+
+		# send rate (flow per sec)
+		# for send_rate in 010 020 030 040 050 060 070 080 090 100
+		for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
 		do
+
 			sudo mn -c
 			sudo rm -rf ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/
 			sudo mkdir -p ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/ping
