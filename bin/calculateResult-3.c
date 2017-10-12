@@ -22,7 +22,8 @@ int main(int argc, char **argv)
 	strcat(part, "ping/");
 	d = opendir(part);
 	int count = 0;
-	double sendRound = 0;
+	double send;
+	double sendRound;
 	if (d) {
 		while ((dir = readdir(d)) != NULL){
 			// printf("%s\n", dir->d_name);
@@ -69,6 +70,9 @@ int main(int argc, char **argv)
 				minDip3 = dIP3;
 				minDip4 = dIP4;
 				minDelay = delay;
+
+				send = 0;
+				sendRound = 0;
 			}
 			else{
 				if(delay < minDelay){
@@ -93,12 +97,13 @@ int main(int argc, char **argv)
 					maxDip3 = dIP3;
 					maxDip4 = dIP4;
 					maxDelay = delay;
-					printf("%s",part);
+					//printf("%s",part);
 				}
 			}
 
-			totalDelay += delay;
 			//printf("%lf:%d ", sendRound, round);
+			totalDelay += delay;
+			send++;
 			sendRound = sendRound + round;
 
 			// FILE* outF;
@@ -116,9 +121,9 @@ int main(int argc, char **argv)
 		closedir(d);
 	}
 
-	printf("\n %lf %d \n", sendRound, count);
+	printf("\n send : %lf send success : %lf \n", send, sendRound);
 
-	printf("%lf,%lf,%lf,%lf \n",minDelay,maxDelay,totalDelay/count,sendRound/count);
+	printf("%lf,%lf,%lf,%lf \n",minDelay,maxDelay,totalDelay/count, sendRound/send);
 
 	char str[999];
 	FILE * file;
@@ -129,7 +134,7 @@ int main(int argc, char **argv)
 	file = fopen(part, "r");
 
 	int types[10];
-	int versions[60];
+	long long int versions[60][2];
 	int i;
 
 	if (file) {
@@ -138,7 +143,8 @@ int main(int argc, char **argv)
 			types[i] = 0;
 		}
 		for(i=0; i<60; i++){
-			versions[i] = 0;
+			versions[i][0] = 0;
+			versions[i][1] = 0;
 		}
 		char* line = NULL;
 		size_t len = 0;
@@ -161,7 +167,8 @@ int main(int argc, char **argv)
 				types[type]++;
 			}
 			if(version >= 0 && version <= 35 ){
-				versions[version]++;
+				versions[version][0]++;
+				versions[version][1] += payload;
 			}
 		}
 		fclose(file);
@@ -174,8 +181,8 @@ int main(int argc, char **argv)
 	}
 	printf("\n");
 	for(i=0; i<35; i++){
-		if(versions[i] != 0){
-			printf("%2d : %10d \n",i,versions[i]);
+		if(versions[i][0] != 0){
+			printf("%2d : %10lld \t %20lld\n",i,versions[i][0],versions[i][1]);
 		}
 	}
 
