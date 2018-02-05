@@ -40,8 +40,9 @@ do
 			done
 			echo ""
 
-			sudo sshpass -p $password ssh $username@$controller_IP 'rm cpu-mem-uses.txt' &
-			sudo sshpass -p $password ssh $username@$controller_IP './start-controller.sh' &
+			sudo sshpass -p $password ssh $username@$controller_IP 'rm cpu-mem-uses.txt'
+			sudo sshpass -p $password ssh $username@$controller_IP './start-controller.sh &'
+			sudo sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture >> cpu-mem-uses.txt &'
 			
 			echo "wait for start topology"
 			for delay in $(seq 1 $delay_after_start_controller)
