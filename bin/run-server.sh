@@ -17,13 +17,15 @@ for repeat_no in 01
 do
 
 	# number of switch
-        # for no_switch in 010 020 030 040 050 060 070 080 090 100
-        for no_switch in 100 200 300 400 500
-        do
+    # for no_switch in 010 020 030 040 050 060 070 080 090 100
+    # for no_switch in 100 200 300 400 500
+    for no_switch in 020 040 060 080 100
+    do
 
 		# send rate (flow per sec)
 		# for send_rate in 010 020 030 040 050 060 070 080 090 100
-		for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
+		# for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
+        for send_rate in 020 040 060 080 100
 		do
 
 			sudo mn -c
