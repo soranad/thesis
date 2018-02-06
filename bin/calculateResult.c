@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	strcat(part, "ping/");
 	d = opendir(part);
 	int count = 0;
+	int error = 0;
 	if (d) {
 		while ((dir = readdir(d)) != NULL){
 			// printf("%s\n", dir->d_name);
@@ -94,6 +95,10 @@ int main(int argc, char **argv)
 				}
 			}
 
+			if(delay == 0.0){
+				error++;
+			}
+
 			totalDelay += delay;
 
 			// FILE* outF;
@@ -111,6 +116,7 @@ int main(int argc, char **argv)
 		closedir(d);
 	}
 
+	printf("total:%d error:%d\n", count, error);
 	printf("%lf,%lf,%lf\n",minDelay,maxDelay,totalDelay/count);
 
 	char str[999];
