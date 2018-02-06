@@ -7,7 +7,7 @@ delay_before_start_controller=30
 delay_after_start_controller=60
 
 no_host=1000
-sent_long=60
+sent_long=30
 
 no_capture_package=-1
 
