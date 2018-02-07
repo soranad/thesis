@@ -6,7 +6,7 @@ interface="enp7s0"
 delay_before_start_controller=30
 delay_after_start_controller=60
 
-no_host=2000
+no_host=1500
 sent_long=30
 
 no_capture_package=-1
@@ -25,7 +25,7 @@ do
 		# send rate (flow per sec)
 		# for send_rate in 010 020 030 040 050 060 070 080 090 100
 		# for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
-        for send_rate in 50 100 150 200 250 300
+        for send_rate in 050 100 150 200 250 300 350 400
 		do
 
 			sudo mn -c

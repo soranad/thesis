@@ -2,10 +2,10 @@
 for repeat_no in 01
 do
 	# send rate (flow per sec)
-	for send_rate in 020 040 060 080 100 120 140 160 180 200
+	for send_rate in 100 200 300 400 500
 	do
 		# number of switch
-		for no_switch in 025 050
+		for no_switch in 050 100 150 200 250 300 350 400
 		do
 			# echo "./calculateResult ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/"
 			# ./calculateResult ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/
