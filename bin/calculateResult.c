@@ -96,7 +96,11 @@ int main(int argc, char **argv)
 				}
 			}
 
+			if(error != 1){
+				printf("%s : %d\n",part,error);
+			}
 			errorCount += error;
+			errorCount --;
 
 			totalDelay += delay;
 

@@ -13,7 +13,7 @@ no_capture_package=-1
 
 #number of experiments repeat
 # for repeat_no in 01 02 03
-../results/result.txt
+rm -rf ../results/
 
 for repeat_no in 01
 do
@@ -64,3 +64,6 @@ do
 		done
 	done
 done
+
+zip -r ../$(date '+result-%y-%m-%d-%H-%M.zip') ../result
+rm -rf ../result

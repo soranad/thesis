@@ -12,7 +12,7 @@ response = subprocess.call(["ping", "-c", "1", "-W", "5", hostname], stdout=subp
 end = time.time()
 count = 1
 # response, err = p.communicate()
-while response != 0 & count < 5:
+while response != 0 and count < 3:
 	response = subprocess.call(["ping", "-c", "1", "-W", "5", hostname], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	end = time.time()
 	count = count + 1
