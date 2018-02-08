@@ -65,5 +65,5 @@ do
 	done
 done
 
-zip -r ../$(date '+result-%y-%m-%d-%H-%M.zip') ../result
-rm -rf ../result
+zip -r ../$(date '+result-%y-%m-%d-%H-%M.zip') ../results/
+rm -rf ../results/
