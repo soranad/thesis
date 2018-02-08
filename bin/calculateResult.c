@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	strcat(part, "ping/");
 	d = opendir(part);
 	int count = 0;
-	int error = 0;
+	int errorCount = 0;
 	if (d) {
 		while ((dir = readdir(d)) != NULL){
 			// printf("%s\n", dir->d_name);
@@ -42,8 +42,9 @@ int main(int argc, char **argv)
 			int sIP1,sIP2,sIP3,sIP4;
 			int dIP1,dIP2,dIP3,dIP4;
 			double delay;
+			int error;
 
-			fscanf(inF, "%d.%d.%d.%d,%d.%d.%d.%d,%lf ms",&sIP1,&sIP2,&sIP3,&sIP4,&dIP1,&dIP2,&dIP3,&dIP4,&delay); 
+			fscanf(inF, "%d.%d.%d.%d,%d.%d.%d.%d,%lf ms, %d",&sIP1,&sIP2,&sIP3,&sIP4,&dIP1,&dIP2,&dIP3,&dIP4,&delay,&error); 
 			fclose(inF);
 
 			// printf("%d.%d.%d.%d %d.%d.%d.%d %lf ms\n", sIP1, sIP2, sIP3, sIP4, dIP1, dIP2, dIP3, dIP4, delay); 
@@ -95,9 +96,7 @@ int main(int argc, char **argv)
 				}
 			}
 
-			if(delay == 0.0){
-				error++;
-			}
+			errorCount += error;
 
 			totalDelay += delay;
 
@@ -116,7 +115,7 @@ int main(int argc, char **argv)
 		closedir(d);
 	}
 
-	printf("total:%d error:%d\n", count, error);
+	printf("total:%d error:%d\n", count, errorCount);
 	printf("%lf,%lf,%lf\n",minDelay,maxDelay,totalDelay/count);
 
 	char str[999];
