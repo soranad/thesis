@@ -5,6 +5,7 @@ bin/calculateResult-3
 
 bin/cap_analysis
 pcap/sniffex
-results/*
-result-*
+results/
+result*/
+result*
 *.csv
