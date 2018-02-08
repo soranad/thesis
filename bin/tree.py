@@ -63,11 +63,11 @@ def multiControllerNet():
 
 	net.build()
 	
-	for controller in controllers:
-		controller.start()
-	for i in range(numberOfSwitch):
-		switchs[i].start(controllers)
-		info( "s%d "% (i))
+	# for controller in controllers:
+	# 	controller.start()
+	# for i in range(numberOfSwitch):
+	# 	switchs[i].start(controllers)
+	# 	info( "s%d "% (i))
 
 
 	info( "\n\n*** Testing network\n\n" )

@@ -4,8 +4,8 @@
 
 int main(int argc, char **argv)
 {
-
-	DIR           *d;
+	// calculate ping latency 
+	DIR *d;
 	struct dirent *dir;
 	char part[128];
 
@@ -25,123 +25,85 @@ int main(int argc, char **argv)
 	int errorCount = 0;
 	if (d) {
 		while ((dir = readdir(d)) != NULL){
-			// printf("%s\n", dir->d_name);
-			strcpy(part, argv[1]);
-			strcat(part, "ping/");
-			strcat(part, dir->d_name);
+			if(dir->d_type == DT_REG){
+				strcpy(part, argv[1]);
+				strcat(part, "ping/");
+				strcat(part, dir->d_name);
 
-			FILE *inF;
-			if ( argc > 1) {
-				// printf("%s\n", part);
-				inF = fopen (part, "r");
-			}
-			else{
-				return(-1);
-			}
+				FILE *inF;
+				if ( argc > 1) {
+					inF = fopen (part, "r");
+				}
+				else{
+					return(-1);
+				}
 
-			int sIP1,sIP2,sIP3,sIP4;
-			int dIP1,dIP2,dIP3,dIP4;
-			double delay;
-			int error;
+				int sIP1,sIP2,sIP3,sIP4;
+				int dIP1,dIP2,dIP3,dIP4;
+				double delay;
+				int error;
 
-			fscanf(inF, "%d.%d.%d.%d,%d.%d.%d.%d,%lf ms, %d",&sIP1,&sIP2,&sIP3,&sIP4,&dIP1,&dIP2,&dIP3,&dIP4,&delay,&error); 
-			fclose(inF);
+				fscanf(inF, "%d.%d.%d.%d,%d.%d.%d.%d,%lf ms, %d",&sIP1,&sIP2,&sIP3,&sIP4,&dIP1,&dIP2,&dIP3,&dIP4,&delay,&error); 
+				fclose(inF);
 
-			// printf("%d.%d.%d.%d %d.%d.%d.%d %lf ms\n", sIP1, sIP2, sIP3, sIP4, dIP1, dIP2, dIP3, dIP4, delay); 
-
-			if(count == 2){
-				maxSip1 = sIP1;
-				maxSip2 = sIP2;
-				maxSip3 = sIP3;
-				maxSip4 = sIP4;
-				maxDip1 = dIP1;
-				maxDip2 = dIP2;
-				maxDip3 = dIP3;
-				maxDip4 = dIP4;
-				maxDelay = delay;
-				
-				minSip1 = sIP1;
-				minSip2 = sIP2;
-				minSip3 = sIP3;
-				minSip4 = sIP4;
-				minDip1 = dIP1;
-				minDip2 = dIP2;
-				minDip3 = dIP3;
-				minDip4 = dIP4;
-				minDelay = delay;
-			}
-			else{
-				if(delay < minDelay){
-					minSip1 = sIP1;
-					minSip2 = sIP2;
-					minSip3 = sIP3;
-					minSip4 = sIP4;
-					minDip1 = dIP1;
-					minDip2 = dIP2;
-					minDip3 = dIP3;
-					minDip4 = dIP4;
+				if(count == 0 || delay < minDelay){
+					// minSip1 = sIP1;
+					// minSip2 = sIP2;
+					// minSip3 = sIP3;
+					// minSip4 = sIP4;
+					// minDip1 = dIP1;
+					// minDip2 = dIP2;
+					// minDip3 = dIP3;
+					// minDip4 = dIP4;
 					minDelay = delay;
 				}
-
-				if(delay > maxDelay){
-					maxSip1 = sIP1;
-					maxSip2 = sIP2;
-					maxSip3 = sIP3;
-					maxSip4 = sIP4;
-					maxDip1 = dIP1;
-					maxDip2 = dIP2;
-					maxDip3 = dIP3;
-					maxDip4 = dIP4;
+				if(count == 0 || delay > maxDelay){
+					// maxSip1 = sIP1;
+					// maxSip2 = sIP2;
+					// maxSip3 = sIP3;
+					// maxSip4 = sIP4;
+					// maxDip1 = dIP1;
+					// maxDip2 = dIP2;
+					// maxDip3 = dIP3;
+					// maxDip4 = dIP4;
 					maxDelay = delay;
 				}
+				if(error != 1){
+					printf("%s : %d\n",part,error);
+					errorCount += error;
+					errorCount --;
+				}
+				totalDelay += delay;
+				count++;
 			}
-
-			if(error != 1){
-				printf("%s : %d\n",part,error);
-			}
-			errorCount += error;
-			errorCount --;
-
-			totalDelay += delay;
-
-			// FILE* outF;
-			// if ( argc > 2) {
-			// 	outF = fopen (argv[2], "w");
-			// }
-			// else{
-			// 	outF = fopen ("result.txt", "w");
-			// }
-
-			// printf("%d ",count);
-
-			count++;
 		}
 		closedir(d);
 	}
-
 	printf("total:%d error:%d\n", count, errorCount);
 	printf("%lf,%lf,%lf\n",minDelay,maxDelay,totalDelay/count);
 
+
+	// calculate control package
 	char str[999];
 	FILE * file;
-
 	strcpy(part, argv[1]);
 	strcat(part, "cap.csv");
-
 	file = fopen(part, "r");
 
 	int types[10];
 	int versions[60];
 	int i;
 
+	for(i=0; i<10; i++){
+		types[i] = 0;
+	}
+	for(i=0; i<60; i++){
+		versions[i] = 0;
+	}
+
 	if (file) {
 
-		for(i=0; i<10; i++){
-			types[i] = 0;
-		}
-		for(i=0; i<60; i++){
-			versions[i] = 0;
-		}
+		
 		char* line = NULL;
 		size_t len = 0;
 		getline(&line, &len, file);
@@ -159,10 +121,10 @@ int main(int argc, char **argv)
 
 		while(fscanf(file, "%d,%lf,%d.%d.%d.%d,%d,%d.%d.%d.%d,%d,%d,%d,%d,%d", &index, &time, &sIP1,&sIP2,&sIP3,&sIP4, &sourcePort, &dIP1,&dIP2,&dIP3,&dIP4, &destinstionPort, &winsize, &payload, &type, &version) != EOF){
 			// printf("%d %d %d\n",index, type, version);
-			if( type >= 0 && type <= 10){
+			if( type >= 0 && type < 10){
 				types[type]++;
 			}
-			if(version >= 0 && version <= 35 ){
+			if(version >= 0 && version < 60 ){
 				versions[version]++;
 			}
 		}
@@ -175,12 +137,14 @@ int main(int argc, char **argv)
 		}
 	}
 	printf("\n");
-	for(i=0; i<35; i++){
+	for(i=0; i<60; i++){
 		if(versions[i] != 0){
 			printf("%2d : %10d \n",i,versions[i]);
 		}
 	}
 
+
+	// calculate controller cpu & mem used
 	strcpy(part, argv[1]);
 	strcat(part, "cpu-mem-uses.txt");
 
@@ -193,7 +157,6 @@ int main(int argc, char **argv)
 	double memMax;
 	double memAvg;
 
-	
 	if (file) {
 		char processName[128];
 		double cpu;
