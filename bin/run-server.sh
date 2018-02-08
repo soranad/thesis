@@ -6,26 +6,27 @@ interface="enp7s0"
 delay_before_start_controller=30
 delay_after_start_controller=60
 
-no_host=1500
+no_host=1250
 sent_long=30
 
 no_capture_package=-1
 
 #number of experiments repeat
 # for repeat_no in 01 02 03
+../results/result.txt
+
 for repeat_no in 01
 do
+	# send rate (flow per sec)
+	# for send_rate in 010 020 030 040 050 060 070 080 090 100
+	# for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
+	for send_rate in 050 100 150 200 250 300 350 400
+	do
 
-	# number of switch
-    # for no_switch in 010 020 030 040 050 060 070 080 090 100
-    # for no_switch in 100 200 300 400 500
-    for no_switch in 100 200 300 400 500
-    do
-
-		# send rate (flow per sec)
-		# for send_rate in 010 020 030 040 050 060 070 080 090 100
-		# for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
-        for send_rate in 050 100 150 200 250 300 350 400
+		# number of switch
+		# for no_switch in 010 020 030 040 050 060 070 080 090 100
+		# for no_switch in 100 200 300 400 500
+		for no_switch in 100 200 300 400 500
 		do
 
 			sudo mn -c
@@ -58,6 +59,8 @@ do
 			
 			sudo python tree.py $no_switch $no_host $interface $no_capture_package $send_rate $sent_long $controller_IP ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 			sudo sshpass -p $password scp $username@$controller_IP:cpu-mem-uses.txt ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
+
+			./calculateResult ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/ >> ../results/result.txt
 		done
 	done
 done
