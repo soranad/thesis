@@ -58,10 +58,13 @@ do
 			sudo python tree.py $no_switch $no_host $interface $no_capture_package $send_rate $sent_long $controller_IP ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 			sudo sshpass -p $password scp $username@$controller_IP:cpu-mem-uses.txt ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 
+			echo "tree-$no_switch-sw-$send_rate-ps-$repeat_no/" >> ../results/result.txt
 			./calculateResult ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/ >> ../results/result.txt
 		done
 	done
 done
 
-zip -r ../$(date '+result-%y-%m-%d-%H-%M.zip') ../results/
-rm -rf ../results/
+foldername=$(date '+result-%y-%m-%d-%H-%M')
+mv ../results/ ../$foldername
+zip -r ../$foldername.zip ../$foldername
+rm -rf ../$foldername
