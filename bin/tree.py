@@ -84,8 +84,9 @@ def multiControllerNet():
 	info( "\n\n*** gennerate command\n" )
 
 	sendRate = int(sys.argv[5])
-	time = int(sys.argv[6])
-	numberOfSends = sendRate*time
+	# time = int(sys.argv[6])
+	# numberOfSends = sendRate*time
+	numberOfSends = 3000
 	beta = 1.0/sendRate
 	Y = np.random.exponential(beta, numberOfSends)
 

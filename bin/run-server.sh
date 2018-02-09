@@ -23,8 +23,8 @@ do
 	do
 
 		# number of switch
-		for no_switch in 010 020 030
-		# for no_switch in 100 200 300 400 500
+		# for no_switch in 010 020 030
+		for no_switch in 100 200 300 400 500
 		do
 
 			sudo mn -c
