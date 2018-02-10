@@ -84,7 +84,7 @@ def emptyNet():
 	directoryName = sys.argv[len(sys.argv)-1];
 	directoryName = directoryName + "/ping"
 
-	rint numberOfHost
+	print numberOfHost
 	randHost = list(itertools.combinations(hosts, 2))
 	random.shuffle(randHost)
 	print len(randHost)
