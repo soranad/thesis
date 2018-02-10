@@ -68,7 +68,7 @@ def emptyNet():
 		info( "s%d "% (i))
 
 	net.start()
-	net.staticArp()
+	# net.staticArp()
 
 
 	info( "\n\n*** gennerate send rate \n" )
@@ -89,6 +89,7 @@ def emptyNet():
 	random.shuffle(randHost)
 	print len(randHost)
 
+	cmds = [None] * numberOfSends
 	for i in range(numberOfSends) :
 		cmds[i] = "python ping.py " + randHost[i][1].IP() + " " + randHost[i][0].IP() + " >> "+directoryName+"/"+str(i).zfill(6)+".csv &"
 
