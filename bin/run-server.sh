@@ -19,7 +19,7 @@ for repeat_no in 01
 do
 	# send rate (flow per sec)
 	# for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
-	for send_rate in 050 100 150 200 250 300
+	for send_rate in 100 150 200 250 300
 	do
 
 		# number of switch
@@ -58,7 +58,8 @@ do
 			sudo python tree.py $no_switch $no_host $interface $no_capture_package $send_rate $sent_long $controller_IP ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 			sudo sshpass -p $password scp $username@$controller_IP:cpu-mem-uses.txt ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no
 
-			echo "tree-$no_switch-sw-$send_rate-ps-$repeat_no/" >> ../results/result.txt
+			echo "" >> ../results/result.txt
+			echo "----- tree-$no_switch-sw-$send_rate-ps-$repeat_no/ -----" >> ../results/result.txt
 			./calculateResult ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/ >> ../results/result.txt
 		done
 	done

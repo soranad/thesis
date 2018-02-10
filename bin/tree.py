@@ -1,5 +1,5 @@
 from mininet.net import Mininet
-from mininet.node import Controller, OVSSwitch, RemoteController
+from mininet.node import Controller, OVSKernelSwitch, RemoteController
 from mininet.cli import CLI
 from mininet.log import setLogLevel, info
 
@@ -11,30 +11,30 @@ import numpy as np
 import itertools
 import os
 
-from time import sleep
+def emptyNet():
 
-def multiControllerNet():
+	net = Mininet(controller=RemoteController, switch=OVSKernelSwitch)
+
 
 	info( "*** Creating (reference) controllers" )
-
-	net = Mininet(controller=RemoteController, switch=OVSSwitch)
+	
 	controllers = [None] * (len(sys.argv)-8)
 	for i in range(len(controllers)):
 		print "\n remote controller : " + sys.argv[i+7]
 		controllers[i] = net.addController('c'+str(i), controller=RemoteController, ip=sys.argv[i+7], port=6633)
 
-
+	
 	info( "\n\n*** Creating switches\n" )
-
+	
 	numberOfSwitch = int(sys.argv[1])
 	switchs = [None] * numberOfSwitch
 	for i in range(numberOfSwitch):
 		switchs[i] = net.addSwitch( 's'+str(i) )
 		info('s'+str(i)+' ')
+
 	
-
 	info( "\n\n*** Creating hosts\n" )
-
+	
 	numberOfLeave = (numberOfSwitch+1)/2
 	numberOfHost = int(sys.argv[2])
 	hosts = [None] * numberOfHost
@@ -58,94 +58,73 @@ def multiControllerNet():
 		if leaveNumber >= numberOfLeave :
 			leaveNumber = 0
 
-
 	info( "\n\n*** Starting network\n\n" )
 
 	net.build()
-	
-	# for controller in controllers:
-	# 	controller.start()
-	# for i in range(numberOfSwitch):
-	# 	switchs[i].start(controllers)
-	# 	info( "s%d "% (i))
+	for controller in controllers:
+		controller.start()
+	for i in range(numberOfSwitch):
+		switchs[i].start(controllers)
+		info( "s%d "% (i))
 
-
-	info( "\n\n*** Testing network\n\n" )
-	
 	net.start()
-
-	directoryName = sys.argv[len(sys.argv)-1];
-	directoryName = directoryName + "/ping"
+	net.staticArp()
 
 
-
-
-	
-	info( "\n\n*** gennerate command\n" )
+	info( "\n\n*** gennerate send rate \n" )
 
 	sendRate = int(sys.argv[5])
-	# time = int(sys.argv[6])
-	# numberOfSends = sendRate*time
 	numberOfSends = 1000
 	beta = 1.0/sendRate
 	Y = np.random.exponential(beta, numberOfSends)
 
-	sendHosts = [None] * numberOfSends
-	cmds = [None] * numberOfSends
-	
-	info( "\n\n*** random cmd send package \n" )
-	print numberOfHost
+
+	info( "\n\n*** gennerate random send package command \n" )
+
+	directoryName = sys.argv[len(sys.argv)-1];
+	directoryName = directoryName + "/ping"
+
+	rint numberOfHost
 	randHost = list(itertools.combinations(hosts, 2))
 	random.shuffle(randHost)
 	print len(randHost)
-	
+
 	for i in range(numberOfSends) :
 		cmds[i] = "python ping.py " + randHost[i][1].IP() + " " + randHost[i][0].IP() + " >> "+directoryName+"/"+str(i).zfill(6)+".csv &"
-		# cmds[i] = "ping -c 1 -W 100 " + randHost[i][1].IP() + " >> "+directoryName+"/"+str(i).zfill(6)+".txt &"
-		# cmds[i] = "iperf -c " + randHost[1].IP() + " -n 10000000 &"
 
-	# sleep(120)
-	for i in range(100) :
-		sys.stdout.write("\r" + str(120-i) + " ")
+	for i in range(30) :
+		sys.stdout.write("\r" + str(30-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
 
-	# info( "\n\n*** Start iperf Server\n" )
-	# for i in range(numberOfHost) :
-	# 	hosts[i].cmd("iperf -s &")
 
-	for i in range(15) :
-		sys.stdout.write("\r" + str(15-i) + " ")
-		sys.stdout.flush()
-		sleep(1)
+	info( "\n\n*** Testing network\n\n" )
 
 	cmd2 = ["sshpass", "-p", "password", "ssh", "nick@192.168.1.11", "'./start-cpu-mem-capture.sh' &"]
 	process2 = subprocess.Popen(cmd2)
 
 	cmd = ['./openflow-sniffex', sys.argv[3], sys.argv[4], sys.argv[len(sys.argv)-1]+"/cap.csv"]
 	process = subprocess.Popen(cmd)
-	# process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
 	for i in range(5) :
 		sys.stdout.write("\r" + str(5-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
 
-	info( "\n\n*** Start iperf client\n" )
+	info( "\n\n*** Start send package\n" )
 	for i in range(numberOfSends) :
 		randHost[i][0].cmd(cmds[i])
 		sleep(Y[i])
 
-	# sleep(120)
-	for i in range(120) :
-		sys.stdout.write("\r" + str(120-i) + " ")
+
+	for i in range(30) :
+		sys.stdout.write("\r" + str(30-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
-	
 	# CLI( net )
 	process.kill()
 	net.stop()
 
 if __name__ == '__main__':
-	setLogLevel( 'info' )  # for CLI output
-multiControllerNet()
+	setLogLevel( 'info' )
+	emptyNet()
