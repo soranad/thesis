@@ -11,6 +11,8 @@ import numpy as np
 import itertools
 import os
 
+from time import sleep
+
 def emptyNet():
 
 	net = Mininet(controller=RemoteController, switch=OVSKernelSwitch)
@@ -61,13 +63,13 @@ def emptyNet():
 	info( "\n\n*** Starting network\n\n" )
 
 	net.build()
-	for controller in controllers:
-		controller.start()
-	for i in range(numberOfSwitch):
-		switchs[i].start(controllers)
-		info( "s%d "% (i))
 
-	net.start()
+	# for controller in controllers:
+	# 	controller.start()
+	# for i in range(numberOfSwitch):
+	# 	switchs[i].start(controllers)
+	# 	info( "s%d "% (i))
+	# net.start()
 	# net.staticArp()
 
 
