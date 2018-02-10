@@ -63,15 +63,13 @@ def emptyNet():
 	info( "\n\n*** Starting network\n\n" )
 
 	net.build()
-
-	# for controller in controllers:
-	# 	controller.start()
-	# for i in range(numberOfSwitch):
-	# 	switchs[i].start(controllers)
-	# 	info( "s%d "% (i))
-	# net.start()
-	# net.staticArp()
-
+	for controller in controllers:
+		controller.start()
+	for i in range(numberOfSwitch):
+		switchs[i].start(controllers)
+		info( "s%d "% (i))
+	net.start()
+	
 
 	info( "\n\n*** gennerate send rate \n" )
 
