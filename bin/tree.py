@@ -74,7 +74,7 @@ def emptyNet():
 	info( "\n\n*** gennerate send rate \n" )
 
 	sendRate = int(sys.argv[5])
-	numberOfSends = 1000
+	numberOfSends = 500
 	beta = 1.0/sendRate
 	Y = np.random.exponential(beta, numberOfSends)
 
