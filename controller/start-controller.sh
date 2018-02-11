@@ -1,2 +1,2 @@
 echo "start ODL controller"
-./ODL/nitrogen-ODL-0.7.1/bin/karaf
+./ODL/nitrogen-ODL-0.7.1/bin/karaf -Xms5120m -Xmx10240m
