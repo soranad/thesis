@@ -84,7 +84,7 @@ $ JAVA_MAX_MEM=4G JAVA_MAX_PERM_MEM=512m ./bin/karaf
 ```
 install feature odl-l2switch-switch-ui 
 ```sh
-opendaylight-user@root> feature:install odl-l2switch-switch-ui\
+opendaylight-user@root> feature:install odl-l2switch-switch-ui
 ```
 
 ##### Open Network Operating System
@@ -201,3 +201,6 @@ pip install numpy
 sudo apt-get install python-numpy python-scipy
 
 sudo apt-get install -y sshpass
+
+
+GRUB_CMDLINE_LINUX_DEFAULT="consoleblank=0"
