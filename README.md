@@ -87,7 +87,17 @@ install feature odl-l2switch-switch-ui
 opendaylight-user@root> feature:install odl-l2switch-switch-ui
 ```
 
-##### Open Network Operating System
+##### Open Network Operating 
+
+tar xzf onos-$ONOS_VERSION.tar.gz
+mv onos-$ONOS_VERSION onos
+onos/bin/onos-service start
+
+app activate org.onosproject.openflow
+app activate org.onosproject.fwd
+
+http://XX.YY.WW.ZZ:8181/onos/ui/index.html
+default username and password is onos / rocks.
 
 ##### open Files as root
 ```sh
