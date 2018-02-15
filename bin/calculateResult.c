@@ -76,9 +76,9 @@ int main(int argc, char **argv)
 				}
 				else{
 					totalNumberOfSend += numberOfSend;
+					totalDelay += delay;
+					count++;
 				}
-				totalDelay += delay;
-				count++;
 			}
 		}
 		closedir(d);
