@@ -1,10 +1,11 @@
-controller_IP="192.168.1.22"
+controller_IP="192.168.1.11"
 username="nick"
 password="password"
 interface="enp7s0"
 
 delay_before_start_controller=60
 delay_after_start_controller=120
+delay_after_stop_controller=30
 
 no_host=2000
 sent_long=30
@@ -20,11 +21,10 @@ do
 
 	# number of switch
 	# for no_switch in 010 020 030
-	for no_switch in 100 200 300
+	for no_switch in 050 100 150 200
 	do
 	
 		# send rate (flow per sec)
-		# for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300
 		for send_rate in 025 050 075 100 125 150 175 200 225 250 275 300 325 350 375 400
 		do
 
@@ -64,6 +64,14 @@ do
 			echo "" >> ../results/result.txt
 			echo "----- tree-$no_switch-sw-$send_rate-ps-$repeat_no/ -----" >> ../results/result.txt
 			./calculateResult ../results/tree-$no_switch-sw-$send_rate-ps-$repeat_no/ >> ../results/result.txt
+
+			echo "wait for stop controller"
+			for delay in $(seq 1 $delay_after_stop_controller)
+			do
+				echo -n "$(( $delay_after_stop_controller - $delay )) \r"
+				sleep 1s
+			done
+			echo ""
 		done
 	done
 done

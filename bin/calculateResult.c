@@ -22,7 +22,8 @@ int main(int argc, char **argv)
 	strcat(part, "ping/");
 	d = opendir(part);
 	int count = 0;
-	int errorCount = 0;
+	int sendErrorCount = 0;
+	int totalNumberOfSend = 0;
 	if (d) {
 		while ((dir = readdir(d)) != NULL){
 			if(dir->d_type == DT_REG){
@@ -41,9 +42,10 @@ int main(int argc, char **argv)
 				int sIP1,sIP2,sIP3,sIP4;
 				int dIP1,dIP2,dIP3,dIP4;
 				double delay;
-				int error;
+				int isSendSuccess;
+				int numberOfSend;
 
-				fscanf(inF, "%d.%d.%d.%d,%d.%d.%d.%d,%lf ms, %d",&sIP1,&sIP2,&sIP3,&sIP4,&dIP1,&dIP2,&dIP3,&dIP4,&delay,&error); 
+				fscanf(inF, "%d.%d.%d.%d,%d.%d.%d.%d,%lf ms, %d %d",&sIP1,&sIP2,&sIP3,&sIP4,&dIP1,&dIP2,&dIP3,&dIP4,&delay,&isSendSuccess,&numberOfSend); 
 				fclose(inF);
 
 				if(count == 0 || delay < minDelay){
@@ -68,10 +70,12 @@ int main(int argc, char **argv)
 					// maxDip4 = dIP4;
 					maxDelay = delay;
 				}
-				if(error != 1){
-					printf("%s : %d\n",part,error);
-					errorCount += error;
-					errorCount --;
+				if(isSendSuccess != 1){
+					// printf("%s\n",part);
+					sendErrorCount++;
+				}
+				else{
+					totalNumberOfSend += numberOfSend;
 				}
 				totalDelay += delay;
 				count++;
@@ -79,7 +83,7 @@ int main(int argc, char **argv)
 		}
 		closedir(d);
 	}
-	printf("total:%d error:%d\n", count, errorCount);
+	printf("total:%d   send error:%d   numer of send:%d\n", count, sendErrorCount,totalNumberOfSend);
 	printf("%lf,%lf,%lf\n",minDelay,maxDelay,totalDelay/count);
 
 

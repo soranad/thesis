@@ -99,6 +99,17 @@ app activate org.onosproject.fwd
 http://XX.YY.WW.ZZ:8181/onos/ui/index.html
 default username and password is onos / rocks.
 
+onos-1.12.0/apache-karaf-3.0.8/bin/karaf
+if [ "x$JAVA_MIN_MEM" = "x" ]; then
+    JAVA_MIN_MEM=4G  
+    export JAVA_MIN_MEM
+fi
+if [ "x$JAVA_MAX_MEM" = "x" ]; then
+    JAVA_MAX_MEM=4G  
+    export JAVA_MAX_MEM
+fi
+
+
 ##### open Files as root
 ```sh
 $ sudo nautilus
