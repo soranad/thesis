@@ -118,7 +118,7 @@ def emptyNet():
 		sleep(Y[i])
 
 
-	for i in range(30) :
+	for i in range(120) :
 		sys.stdout.write("\r" + str(30-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
