@@ -19,8 +19,8 @@ while response != 0 and count < 5:
 	count = count + 1
 	# response, err = p.communicate()
 if response != 0 :
-	print "%s,%s,%f ms, 0 %d" % (sys.argv[1], sys.argv[2], (end-start)*1000, count)
+	print "%s,%s,%f ms, 0 %d" % (sys.argv[1], sys.argv[2], -1, count)
 else:
-	print "%s,%s,%f ms, 1 %d" % (sys.argv[1], sys.argv[2], -1, count)
+	print "%s,%s,%f ms, 1 %d" % (sys.argv[1], sys.argv[2], (end-start)*1000, count)
 # Y = np.random.exponential(1, 1)
 # response = subprocess.call(["iperf", "-c", hostname, "-t", str(Y[0])], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
