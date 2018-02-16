@@ -72,7 +72,6 @@ int main(int argc, char **argv)
 					sendErrorCount++;
 				}
 				else{
-					totalNumberOfSend += numberOfSend;
 					totalDelay += delay;
 					count++;
 				}
@@ -80,7 +79,7 @@ int main(int argc, char **argv)
 		}
 		closedir(d);
 	}
-	printf("total:%d   send error:%d   numer of send:%d\n", count, sendErrorCount);
+	printf("total:%d   send error:%d \n", count, sendErrorCount);
 	if(count > 0){
 		printf("%lf,%lf,%lf\n",minDelay,maxDelay,totalDelay/count);
 	}
