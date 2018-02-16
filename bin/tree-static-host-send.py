@@ -108,23 +108,18 @@ def emptyNet():
 	cmd = ['./openflow-sniffex', sys.argv[3], sys.argv[4], sys.argv[len(sys.argv)-1]+"/cap.csv"]
 	process = subprocess.Popen(cmd)
 
-	for i in range(5) :
-		sys.stdout.write("\r" + str(5-i) + " ")
-		sys.stdout.flush()
-		sleep(1)
-
 	info( "\n\n*** Start send package\n" )
 	for i in range(numberOfSends) :
 		randHost[i].cmd(cmds[i])
 		sleep(Y[i])
 
+	process.kill()
 
 	for i in range(120) :
 		sys.stdout.write("\r" + str(120-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
 	# CLI( net )
-	process.kill()
 	net.stop()
 
 if __name__ == '__main__':
