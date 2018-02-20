@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 		totalDelay/count;
 	}
 
-	printf("\n\x1b[32m#####  LATENCY  #####\x1b[0m\n");
+	printf("\n-------------  LATENCY  ------------\n");
 	printf("ping success : %10d\n", count);
 	printf("ping error   : %10d\n", sendErrorCount);
 	printf("ping min   : %12.3lf\n", minDelay);
@@ -138,8 +138,7 @@ int main(int argc, char **argv)
 		cpuAvg = sumCPU/numLine;
 		memAvg = sumMem/numLine;
 	}
-
-	printf("\n\x1b[32m#####  CONTROLLER USE  #####\x1b[0m\n");
+	printf("\n---------  CONTROLLER USE  ---------\n");
 	printf("cpu use min    : %12.3lf\n", cpuMin);
 	printf("cpu use max    : %12.3lf\n", cpuMax);
 	printf("cpu use avg    : %12.3lf\n", cpuAvg);
@@ -231,7 +230,7 @@ int main(int argc, char **argv)
 		fclose(file);
 	}
 
-	printf("\n\x1b[32m#####  NETWORK USE  #####\x1b[0m\n");
+	printf("\n-----------  NETWORK USE  ----------\n");
 	printf("number of package : %12d\n", packageCount); 
 	printf("payload sumation  : %12lld\n", totalPayload);
 
