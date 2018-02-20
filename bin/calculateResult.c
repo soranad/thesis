@@ -186,7 +186,6 @@ int main(int argc, char **argv)
 
 	char * nameList[][6] = {
 		{"Type\\Version","OFP 1.0","OFP 1.1","OFP 1.2","OFP 1.3","OFP 1.4"},
-		{"Type\\Version","1","2","3","4","5"},
 		{"0","Hello","Hello","Hello","Hello","Hello"},
 		{"1","Error","Error","Error","Error","Error"},
 		{"2","EchoReq","EchoReq","EchoReq","EchoReq","EchoReq"},
@@ -227,23 +226,25 @@ int main(int argc, char **argv)
 	for(j=0; j<35; j++){
 		for(i=0; i<6; i++){
 			if(packageTypes[i][j] > 0){
-				if(j == 0){
-					printf("\x1b[32m%18s\x1b[35m:\x1b[31m%-8d\x1b[0m",nameList[j][i], packageTypes[i][j]);
-				}
-				else{
-					printf("\x1b[32m%18s\x1b[35m:\x1b[31m%-8d\x1b[0m",nameList[j+1][i], packageTypes[i][j]);
-				}
+				printf("%-15s %-20s %12d \n",nameList[0][i],nameList[j][i], packageTypes[i][j]);
 			}
-			else{
-				if(j == 0){
-					printf("\x1b[32m%18s\x1b[35m:\x1b[33m%-8d\x1b[0m",nameList[j][i], packageTypes[i][j]);
-				}
-				else{
-					printf("\x1b[32m%18s\x1b[35m:\x1b[33m%-8d\x1b[0m",nameList[j+1][i], packageTypes[i][j]);
-				}
-			}
+			// if(packageTypes[i][j] > 0){
+			// 	if(j == 0){
+			// 		printf("\x1b[32m%18s\x1b[35m:\x1b[31m%-8d\x1b[0m",nameList[j][i], packageTypes[i][j]);
+			// 	}
+			// 	else{
+			// 		printf("\x1b[32m%18s\x1b[35m:\x1b[31m%-8d\x1b[0m",nameList[j+1][i], packageTypes[i][j]);
+			// 	}
+			// }
+			// else{
+			// 	if(j == 0){
+			// 		printf("\x1b[32m%18s\x1b[35m:\x1b[33m%-8d\x1b[0m",nameList[j][i], packageTypes[i][j]);
+			// 	}
+			// 	else{
+			// 		printf("\x1b[32m%18s\x1b[35m:\x1b[33m%-8d\x1b[0m",nameList[j+1][i], packageTypes[i][j]);
+			// 	}
+			// }
 		}
-		printf("\n");
 	}
 	printf("\n");
   return(0);
