@@ -113,14 +113,19 @@ def emptyNet():
 		randHost[i].cmd(cmds[i])
 		sleep(Y[i])
 
-	process.kill()
-
-	for i in range(120) :
+	for i in range(30) :
 		sys.stdout.write("\r" + str(120-i) + " ")
 		sys.stdout.flush()
 		sleep(1)
+	process.kill()
+	for i in range(90) :
+		sys.stdout.write("\r" + str(90-i) + " ")
+		sys.stdout.flush()
+		sleep(1)
+		
 	# CLI( net )
 	net.stop()
+	
 
 if __name__ == '__main__':
 	setLogLevel( 'info' )
