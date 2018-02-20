@@ -46,7 +46,7 @@ do
 			
 			# sudo sshpass -p $password ssh $username@$controller_IP './start-cpu-mem-capture.sh' &
 			
-			sudo python tree-static-host-send.py $no_switch $no_host $interface $no_capture_package $send_rate $sent_long $controller_IP ../results/tree-$no_switchs-sw-$no_host-hosts-$send_rate-cps
+			sudo python tree-static-host-send.py $no_switch $no_host $interface $no_capture_package $send_rate $controller_IP ../results/tree-$no_switchs-sw-$no_host-hosts-$send_rate-cps
 			sudo sshpass -p $password scp $username@$controller_IP:cpu-mem-uses.txt ../results/tree-$no_switchs-sw-$no_host-hosts-$send_rate-cps
 
 			sudo sshpass -p $password ssh $username@$controller_IP './stop-controller.sh' &

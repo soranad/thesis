@@ -20,10 +20,10 @@ def emptyNet():
 
 	info( "*** Creating (reference) controllers" )
 	
-	controllers = [None] * (len(sys.argv)-8)
+	controllers = [None] * (len(sys.argv)-7)
 	for i in range(len(controllers)):
-		print "\n remote controller : " + sys.argv[i+7]
-		controllers[i] = net.addController('c'+str(i), controller=RemoteController, ip=sys.argv[i+7], port=6633)
+		print "\n remote controller : " + sys.argv[i+6]
+		controllers[i] = net.addController('c'+str(i), controller=RemoteController, ip=sys.argv[i+6], port=6633)
 
 	
 	info( "\n\n*** Creating switches\n" )
