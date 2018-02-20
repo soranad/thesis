@@ -190,7 +190,8 @@ int main(int argc, char **argv)
 	strcat(part, "cap.csv");
 	file = fopen(part, "r");
 
-	int packageTypes[6][35];
+	int packageFromController[6][35];
+	int packageToController[6][35];
 	int i;
 	int j;
 	long long int totalPayload = 0;
@@ -198,7 +199,8 @@ int main(int argc, char **argv)
 
 	for(i=0; i<6; i++){
 		for(j=0; j<35; j++){
-			packageTypes[i][j] = 0;
+			packageFromController[i][j] = 0;
+			packageToController[i][j] = 0;
 		}
 	}
 
@@ -222,8 +224,14 @@ int main(int argc, char **argv)
 		while(fscanf(file, "%d,%lf,%d.%d.%d.%d,%d,%d.%d.%d.%d,%d,%d,%d,%d,%d", &index, &time, &sIP1,&sIP2,&sIP3,&sIP4, &sourcePort, &dIP1,&dIP2,&dIP3,&dIP4, &destinstionPort, &winsize, &payload, &type, &version) != EOF){
 			// printf("%d %d %d\n",index, type, version);
 			if( type >= 0 && type < 10 && version >= 0 && version < 60 ){
-				packageCount++; 
-				packageTypes[type][version]++;
+				packageCount++;
+				if(sourcePort == 6633){
+					packageFromController[type][version]++;
+				}
+				else if(destinstionPort == 6633){
+					packageToController[type][version]++;
+				}
+
 				totalPayload += payload;
 			}
 		}
@@ -234,13 +242,23 @@ int main(int argc, char **argv)
 	printf("number of package : %12d\n", packageCount); 
 	printf("payload sumation  : %12lld\n", totalPayload);
 
+	printf("\n-- packages from controller --\n");
 	for(j=0; j<35; j++){
 		for(i=0; i<6; i++){
-			if(packageTypes[i][j] > 0){
-				printf("%-15s %-15s : %12d \n",nameList[0][i],nameList[j][i], packageTypes[i][j]);
+			if(packageFromController[i][j] > 0){
+				printf("%-15s %-15s : %12d \n",nameList[0][i],nameList[j][i], packageFromController[i][j]);
+			}
+		}
+	}
+	printf("\n--- packages to controller ---\n");
+	for(j=0; j<35; j++){
+		for(i=0; i<6; i++){
+			if(packageToController[i][j] > 0){
+				printf("%-15s %-15s : %12d \n",nameList[0][i],nameList[j][i], packageToController[i][j]);
 			}
 		}
 	}
 	printf("\n");
+
   return(0);
 }
