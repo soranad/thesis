@@ -154,7 +154,7 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	int sport = ntohs(tcp->th_sport);
 	int dport = ntohs(tcp->th_dport);
 	
-	if(ntohs(tcp->th_sport) == 6653 || ntohs(tcp->th_sport) == 6655 || ntohs(tcp->th_sport) == 6633){
+	if(sport == 6633 || dport == 6633){
 		count++;
 		fprintf(outFileIn,"%d,%lf,", count, time);
 		fprintf(outFileIn,"%s,%d,", inet_ntoa(ip->ip_src), sport);
