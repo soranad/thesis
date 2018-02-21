@@ -197,6 +197,13 @@ int main(int argc, char **argv)
 	long long int totalPayload = 0;
 	int packageCount = 0;
 
+	int maxps = 0;
+	int ps = 0;
+	int pssec = 0;
+	int maxbw = 0;
+	int bw = 0;
+
+
 	for(i=0; i<6; i++){
 		for(j=0; j<35; j++){
 			packageFromController[i][j] = 0;
@@ -221,9 +228,10 @@ int main(int argc, char **argv)
 		int type;
 		int version;
 
+		
 		while(fscanf(file, "%d,%lf,%d.%d.%d.%d,%d,%d.%d.%d.%d,%d,%d,%d,%d,%d", &index, &time, &sIP1,&sIP2,&sIP3,&sIP4, &sourcePort, &dIP1,&dIP2,&dIP3,&dIP4, &destinstionPort, &winsize, &payload, &type, &version) != EOF){
 			// printf("%d %d %d\n",index, type, version);
-			if( type >= 0 && type < 10 && version >= 0 && version < 60 ){
+			if( type >= 0 && type < 6 && version >= 0 && version < 35 ){
 				packageCount++;
 				if(sourcePort == 6633){
 					packageFromController[type][version]++;
@@ -231,8 +239,25 @@ int main(int argc, char **argv)
 				else if(destinstionPort == 6633){
 					packageToController[type][version]++;
 				}
-
 				totalPayload += payload;
+
+				int t = time;
+				if(t == pssec){
+					ps++;
+					bw += payload;
+				}
+				else{
+					if(ps > maxps){
+						maxps = ps;
+					}
+					if(bw > maxbw){
+						maxbw = bw;
+					}
+					pssec = t;
+					ps = 0;
+					bw = 0;
+				}
+
 			}
 		}
 		fclose(file);
@@ -241,12 +266,13 @@ int main(int argc, char **argv)
 	printf("\n-----------  NETWORK USE  ----------\n");
 	printf("number of package : %12d\n", packageCount); 
 	printf("payload sumation  : %12lld\n", totalPayload);
-
+	printf("maximum send rate : %12d\n", maxps);
+	printf("maximum bw        : %12d\n", maxbw);
 	printf("\n-- packages from controller --\n");
 	for(j=0; j<35; j++){
 		for(i=0; i<6; i++){
 			if(packageFromController[i][j] > 0){
-				printf("%-15s %-15s : %12d \n",nameList[0][i],nameList[j][i], packageFromController[i][j]);
+				printf("%-15s %-15s : %12d \n",nameList[0][i],nameList[j+1][i], packageFromController[i][j]);
 			}
 		}
 	}
@@ -254,7 +280,7 @@ int main(int argc, char **argv)
 	for(j=0; j<35; j++){
 		for(i=0; i<6; i++){
 			if(packageToController[i][j] > 0){
-				printf("%-15s %-15s : %12d \n",nameList[0][i],nameList[j][i], packageToController[i][j]);
+				printf("%-15s %-15s : %12d \n",nameList[0][i],nameList[j+1][i], packageToController[i][j]);
 			}
 		}
 	}
